@@ -1,0 +1,10 @@
+{
+  "n_particles": 1000,
+  "n_steps": 500,
+  "step_length": 2.0,
+  "time_step": 1.0,
+  "seed": 42,
+  "boundary": "none",
+  "box_size": null,
+  "save_every": 1
+}

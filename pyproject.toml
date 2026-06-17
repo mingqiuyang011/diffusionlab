@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "diffusionlab"
+version = "0.1.0"
+description = "A command-line tool for simulating 2D random walks and estimating diffusion coefficients."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.23",
+    "pandas>=1.5",
+    "matplotlib>=3.6"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7",
+    "coverage>=7"
+]
+
+[project.scripts]
+diffusionlab = "diffusionlab.cli:main"

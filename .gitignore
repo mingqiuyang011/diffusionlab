@@ -1,0 +1,31 @@
+# Python cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Virtual environment
+.venv/
+venv/
+
+# Build files
+build/
+dist/
+*.egg-info/
+
+# Editor files
+.vscode/
+.idea/
+
+# Generated output
+results/*
+figures/*
+
+# Keep folders
+!results/.gitkeep
+!figures/.gitkeep
+
+# System files
+.DS_Store
+Thumbs.db
