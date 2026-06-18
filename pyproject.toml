@@ -22,3 +22,5 @@ dev = [
 
 [project.scripts]
 diffusionlab = "diffusionlab.cli:main"
+[tool.setuptools]
+packages = ["diffusionlab"]
