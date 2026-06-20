@@ -2,30 +2,31 @@
 __pycache__/
 *.py[cod]
 .pytest_cache/
-.coverage
-htmlcov/
 
 # Virtual environment
 .venv/
 venv/
 
-# Build files
+# Test coverage
+.coverage
+htmlcov/
+
+# Build and installation files
 build/
 dist/
 *.egg-info/
+
+# Generated simulation output
+results/*
+!results/.gitkeep
+
+# Generated figures
+figures/*
+!figures/.gitkeep
 
 # Editor files
 .vscode/
 .idea/
 
-# Generated output
-results/*
-figures/*
-
-# Keep folders
-!results/.gitkeep
-!figures/.gitkeep
-
-# System files
+# macOS files
 .DS_Store
-Thumbs.db
