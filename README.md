@@ -14,18 +14,18 @@ Many independent particles start at the origin and perform a random walk on a tw
 
 At every time step, each particle moves with equal probability in one of four directions:
 
-$$
+```math
 \Delta \mathbf{r} \in
 \left\{
 (a,0),\,(-a,0),\,(0,a),\,(0,-a)
 \right\},
-$$
+```
 
-where \(a\) is the step length.
+where $a$ is the step length.
 
-For \(N\) particles, the mean squared displacement from their initial positions is
+For $N$ particles, the mean squared displacement from their initial positions is
 
-$$
+```math
 \operatorname{MSD}(t)
 =
 \frac{1}{N}
@@ -35,55 +35,55 @@ $$
 +
 \left(y_i(t)-y_i(0)\right)^2
 \right].
-$$
+```
 
-All particles in this implementation start at \((0,0)\), so this becomes
+All particles in this implementation start at $(0,0)$, so this becomes
 
-$$
+```math
 \operatorname{MSD}(t)
 =
 \frac{1}{N}
 \sum_{i=1}^{N}
 \left[x_i^2(t)+y_i^2(t)\right].
-$$
+```
 
 For unrestricted diffusion in two dimensions,
 
-$$
+```math
 \operatorname{MSD}(t)=4Dt,
-$$
+```
 
-where \(D\) is the diffusion coefficient.
+where $D$ is the diffusion coefficient.
 
-For a lattice walk with step length \(a\) and time interval \(\Delta t\),
+For a lattice walk with step length $a$ and time interval $\Delta t$,
 
-$$
+```math
 \operatorname{MSD}(n)=na^2,
 \qquad
 t=n\Delta t,
-$$
+```
 
 and therefore
 
-$$
+```math
 D_{\mathrm{theory}}
 =
 \frac{a^2}{4\Delta t}.
-$$
+```
 
 The program fits the simulated data with
 
-$$
+```math
 \operatorname{MSD}(t)\approx mt+b
-$$
+```
 
-and estimates the diffusion coefficient from the fitted slope \(m\):
+and estimates the diffusion coefficient from the fitted slope $m$:
 
-$$
+```math
 D_{\mathrm{estimated}}=\frac{m}{4}.
-$$
+```
 
-The intercept \(b\) is not forced to zero. A small non-zero intercept is expected in a finite stochastic simulation.
+The intercept $b$ is not forced to zero. A small non-zero intercept is expected in a finite stochastic simulation.
 
 ## Main features
 
@@ -182,7 +182,7 @@ The command performs the complete workflow:
 1. Load and validate the configuration.
 2. Simulate the particle trajectories.
 3. Calculate the MSD.
-4. Fit the MSD curve and estimate \(D\).
+4. Fit the MSD curve and estimate $D$.
 5. Save numerical outputs.
 6. Generate the trajectory and MSD plots.
 
@@ -207,8 +207,8 @@ The example `configs/free_walk.json` contains:
 | --- | --- | --- |
 | `n_particles` | Number of independent particles | Positive integer |
 | `n_steps` | Number of random-walk steps | Positive integer |
-| `step_length` | Lattice step length \(a\) | Positive number |
-| `time_step` | Time interval \(\Delta t\) per step | Positive number |
+| `step_length` | Lattice step length $a$ | Positive number |
+| `time_step` | Time interval $\Delta t$ per step | Positive number |
 | `seed` | Random seed used for reproducibility | Integer |
 | `boundary` | Boundary condition | `"none"` or `"reflecting"` |
 | `box_size` | Side length of the reflecting square | Positive for a reflecting boundary; otherwise `null` |
@@ -233,7 +233,7 @@ results/free_walk/
 | --- | --- |
 | `trajectories.csv` | Position of every particle at every saved step |
 | `msd.csv` | Simulation step, physical time, and MSD |
-| `summary.json` | Fit parameters, estimated and theoretical \(D\), relative error, and configuration metadata |
+| `summary.json` | Fit parameters, estimated and theoretical $D$, relative error, and configuration metadata |
 | `trajectories.png` | Sample particle trajectories |
 | `msd_fit.png` | Simulated MSD and its fitted line |
 
@@ -247,34 +247,34 @@ The displayed example was generated with:
 | --- | ---: |
 | Number of particles | 1000 |
 | Number of steps | 500 |
-| Step length \(a\) | 1.0 |
-| Time step \(\Delta t\) | 1.0 |
+| Step length $a$ | 1.0 |
+| Time step $\Delta t$ | 1.0 |
 | Random seed | 42 |
 | Boundary condition | None |
 
 For these parameters,
 
-$$
+```math
 D_{\mathrm{theory}}
 =
 \frac{1^2}{4(1)}
 =
 0.25.
-$$
+```
 
 The generated `summary.json` contains:
 
 | Quantity | Result |
 | --- | ---: |
-| Fitted slope \(m\) | 1.0113316342 |
-| Fitted intercept \(b\) | -0.4918985773 |
-| Estimated \(D=m/4\) | 0.2528329086 |
-| Theoretical \(D\) | 0.2500000000 |
+| Fitted slope $m$ | 1.0113316342 |
+| Fitted intercept $b$ | -0.4918985773 |
+| Estimated $D=m/4$ | 0.2528329086 |
+| Theoretical $D$ | 0.2500000000 |
 | Relative error | 1.1332% |
 
 The numerical estimate is close to the theoretical value. The difference is expected because the MSD is calculated from a finite ensemble of random trajectories.
 
-The final recorded MSD at \(t=500\) is `506.926`, while the theoretical ensemble expectation is `500`.
+The final recorded MSD at $t=500$ is `506.926`, while the theoretical ensemble expectation is `500`.
 
 ### Example particle trajectories
 
@@ -286,7 +286,7 @@ Individual trajectories are irregular. The diffusion law appears only after aver
 
 ![Mean squared displacement and fitted diffusion line](docs/images/msd_fit.png)
 
-The approximately linear MSD curve is consistent with unrestricted diffusion. The fitted slope is used to estimate \(D\).
+The approximately linear MSD curve is consistent with unrestricted diffusion. The fitted slope is used to estimate $D$.
 
 ## Additional experiments
 
@@ -299,9 +299,9 @@ diffusionlab --config configs/step_length_05.json --out results/step_length_05
 diffusionlab --config configs/step_length_20.json --out results/step_length_20
 ```
 
-For fixed \(\Delta t=1\), theory predicts:
+For fixed $\Delta t=1$, theory predicts:
 
-| Step length \(a\) | Theoretical \(D=a^2/(4\Delta t)\) |
+| Step length $a$ | Theoretical $D=a^2/(4\Delta t)$ |
 | ---: | ---: |
 | 0.5 | 0.0625 |
 | 1.0 | 0.25 |
@@ -309,9 +309,9 @@ For fixed \(\Delta t=1\), theory predicts:
 
 Thus,
 
-$$
+```math
 D\propto a^2.
-$$
+```
 
 ### Reflecting boundary
 
@@ -323,7 +323,7 @@ diffusionlab --config configs/reflecting_box.json --out results/reflecting_box
 
 With reflecting boundaries, particles remain inside a finite square. The MSD initially grows, then slows and approaches a plateau.
 
-The free-space relation \(\operatorname{MSD}=4Dt\) applies only before confinement dominates. A linear fit over the entire confined trajectory should therefore not be interpreted as a free-space diffusion coefficient.
+The free-space relation $\operatorname{MSD}=4Dt$ applies only before confinement dominates. A linear fit over the entire confined trajectory should therefore not be interpreted as a free-space diffusion coefficient.
 
 ## Testing on macOS
 
