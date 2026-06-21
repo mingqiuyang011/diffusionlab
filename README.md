@@ -1,18 +1,19 @@
 # DiffusionLab
 
-DiffusionLab is a lightweight Python package and command-line tool for simulating two-dimensional lattice random walks, calculating the mean squared displacement (MSD), and estimating the diffusion coefficient.
+DiffusionLab is a small Python library (with a handy command-line interface) for playing around with 2D lattice random walks. You can use it to calculate mean squared displacement (MSD) and estimate diffusion coefficients—pretty straightforward stuff.
 
-This README uses **macOS commands**. The project is designed to be reproducible, modular, tested, and usable on a machine other than the one on which it was developed.
+All the commands in this README are given for **macOS**, but they'll likely work on Linux too with minor changes. I've tried to keep the code modular and tested, so you should be able to run it on any machine, not just the one I built it on. Reproducibility was a big focus as well.
+
 
 ## Project goal
 
-The project demonstrates how microscopic random motion produces macroscopic diffusion.
+The whole point of this project is to show something pretty fundamental: if you zoom out, all those tiny random movements at the microscopic level actually add up to smooth, predictable diffusion at the macroscopic scale.
 
-Many independent particles start at the origin and perform a random walk on a two-dimensional square lattice. Their trajectories are recorded, the ensemble MSD is calculated, and the numerical diffusion coefficient is obtained from a linear fit.
+Here's how it works in practice—I start a bunch of independent particles at the origin, let them hop around a 2D square lattice, and log where they end up. From those trajectories, I compute the average MSD across the ensemble, then fit a straight line through the data to back out the numerical diffusion coefficient.
 
 ## Scientific model
 
-At every time step, each particle moves with equal probability in one of four directions:
+Here's the movement rule: at each step, a particle picks one of four directions—up, down, left, or right—all with equal chance.
 
 ```math
 \Delta \mathbf{r} \in
@@ -87,14 +88,15 @@ The intercept $b$ is not forced to zero. A small non-zero intercept is expected 
 
 ## Main features
 
-- Reproducible simulations controlled by an explicit random seed
-- JSON configuration files, so users do not need to edit source code
-- Unrestricted and reflecting-boundary random walks
-- Separate simulation, analysis, plotting, and file-I/O modules
-- CSV and JSON output files
-- Particle-trajectory and MSD-fit figures
-- Command-line interface
-- Automated tests with `pytest`
+- **Reproducibility**:  set a seed, and the random walk is deterministic every time.
+- **Configuration**: all settings go into a JSON file—no source-code editing required.
+- **Boundary options**: choose between unrestricted or reflecting walls.
+- **Modular code**: separate simulation, analysis, plotting, and I/O into their own modules.
+- **Output formats**: get both CSV and JSON for your data.
+- **Visualization**: the tool automatically spits out trajectory plots and MSD linear-fit figures.
+- **CLI**: run everything from the command line if you prefer.
+- **Testing**: include a suite of `pytest` tests to keep things stable.
+
 
 ## Requirements
 
@@ -321,7 +323,7 @@ Run the confined example:
 diffusionlab --config configs/reflecting_box.json --out results/reflecting_box
 ```
 
-With reflecting boundaries, particles remain inside a finite square. The MSD initially grows, then slows and approaches a plateau.
+With reflective walls in place, the walkers never leave the box. You'll see the MSD rise at first, then the growth tapers off and it levels out—basically hits a ceiling.
 
 The free-space relation $\mathrm{MSD}=4Dt$ applies only before confinement dominates. A linear fit over the entire confined trajectory should therefore not be interpreted as a free-space diffusion coefficient.
 
@@ -339,16 +341,16 @@ Run the full test suite:
 pytest -v
 ```
 
-The current suite contains 11 tests covering:
+The current test suite includes 11 tests that cover the following:
 
-- Configuration loading and validation
-- Initialization at the origin
-- Correct lattice-step length
-- Reproducibility for a fixed random seed
-- Reflecting-boundary behavior
-- MSD calculation for hand-checked data
-- Diffusion-coefficient fitting for known linear data
-- CSV and JSON input/output behavior
+- Configuration files are loaded and validated against the expected schema.
+- All particles are initialized at the origin at the start of each simulation.
+- The step length is confirmed to equal the prescribed lattice spacing.
+- Using a fixed random seed yields bitwise-identical trajectories across runs.
+- Reflecting boundaries keep particles inside the finite square, with proper bounce behavior.
+- The MSD calculation is checked against reference values computed by hand.
+- The diffusion‑coefficient fitting routine recovers the correct slope from synthetic linear data.
+- Both CSV and JSON I/O functions are exercised to ensure correct read/write operations.
 
 Measure coverage with:
 
@@ -394,14 +396,14 @@ diffusionlab/
 └── LICENSE
 ```
 
-Module responsibilities:
+The modules and their responsibilities:
 
-- `config.py` loads and validates user configuration.
-- `random_walk.py` performs the simulation.
-- `analysis.py` calculates the MSD and fits the diffusion coefficient.
-- `io.py` reads and writes numerical data.
-- `plotting.py` only creates visualizations.
-- `cli.py` combines the modules into a user-facing workflow.
+- `config.py` handles loading and validation of user‑supplied parameters.
+- `random_walk.py` runs the simulation itself—stepping particles on the lattice one move at a time.
+- `analysis.py` computes the ensemble MSD and fits a linear regression to extract the diffusion coefficient.
+- `io.py` manages all reading and writing of numerical results, including both CSV and JSON formats.
+- `plotting.py` is reserved exclusively for generating figures (trajectory plots and MSD‑fit curves).
+- `cli.py` ties together the other modules into a single command‑line workflow for the end user.
 
 ## Reproducibility
 
@@ -448,12 +450,14 @@ test -f docs/images/msd_fit.png && echo "MSD image: OK"
 
 ## Limitations
 
-- The model uses a discrete square lattice rather than continuous Brownian motion.
-- Particles are independent and do not interact.
-- External forces, hydrodynamic effects, and spatially varying diffusion are not included.
-- Statistical uncertainty decreases with more particles, but runtime, memory use, and output-file size increase.
-- Storage use is proportional to the number of particles multiplied by the number of saved time steps.
-- A free-diffusion linear fit is not physically appropriate after a reflecting-boundary simulation enters its confined regime.
+Current limitations of the model include:
+
+- Motion is restricted to a discrete square lattice, rather than continuous Brownian paths.
+- Particles are treated as independent—they do not collide or interact with one another.
+- Several physical effects are not accounted for: external forces, hydrodynamic interactions, and spatial variations in the diffusion coefficient.
+- Statistical accuracy improves with more particles, but that comes with increased runtime, memory usage, and output file size.
+- Storage requirements scale linearly with the number of particles and the number of saved time steps.
+- The diffusion coefficient obtained from a linear fit is only valid for free diffusion; after a reflecting-boundary simulation enters the confined regime, that fit no longer applies.
 
 ## Author
 
