@@ -26,7 +26,7 @@ where $a$ is the step length.
 For $N$ particles, the mean squared displacement from their initial positions is
 
 ```math
-\operatorname{MSD}(t)
+\mathrm{MSD}(t)
 =
 \frac{1}{N}
 \sum_{i=1}^{N}
@@ -40,7 +40,7 @@ For $N$ particles, the mean squared displacement from their initial positions is
 All particles in this implementation start at $(0,0)$, so this becomes
 
 ```math
-\operatorname{MSD}(t)
+\mathrm{MSD}(t)
 =
 \frac{1}{N}
 \sum_{i=1}^{N}
@@ -50,7 +50,7 @@ All particles in this implementation start at $(0,0)$, so this becomes
 For unrestricted diffusion in two dimensions,
 
 ```math
-\operatorname{MSD}(t)=4Dt,
+\mathrm{MSD}(t)=4Dt,
 ```
 
 where $D$ is the diffusion coefficient.
@@ -58,7 +58,7 @@ where $D$ is the diffusion coefficient.
 For a lattice walk with step length $a$ and time interval $\Delta t$,
 
 ```math
-\operatorname{MSD}(n)=na^2,
+\mathrm{MSD}(n)=na^2,
 \qquad
 t=n\Delta t,
 ```
@@ -74,7 +74,7 @@ D_{\mathrm{theory}}
 The program fits the simulated data with
 
 ```math
-\operatorname{MSD}(t)\approx mt+b
+\mathrm{MSD}(t)\approx mt+b
 ```
 
 and estimates the diffusion coefficient from the fitted slope $m$:
@@ -323,7 +323,7 @@ diffusionlab --config configs/reflecting_box.json --out results/reflecting_box
 
 With reflecting boundaries, particles remain inside a finite square. The MSD initially grows, then slows and approaches a plateau.
 
-The free-space relation $\operatorname{MSD}=4Dt$ applies only before confinement dominates. A linear fit over the entire confined trajectory should therefore not be interpreted as a free-space diffusion coefficient.
+The free-space relation $\mathrm{MSD}=4Dt$ applies only before confinement dominates. A linear fit over the entire confined trajectory should therefore not be interpreted as a free-space diffusion coefficient.
 
 ## Testing on macOS
 
