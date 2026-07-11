@@ -1,0 +1,14 @@
+{
+  "fit_slope": 1.0113316342295489,
+  "fit_intercept": -0.49189857734732956,
+  "estimated_diffusion_coefficient": 0.2528329085573872,
+  "theoretical_diffusion_coefficient": 0.25,
+  "relative_error": 0.01133163422954886,
+  "n_particles": 1000,
+  "n_steps": 500,
+  "step_length": 1.0,
+  "time_step": 1.0,
+  "seed": 42,
+  "boundary": "none",
+  "box_size": null
+}
