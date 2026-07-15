@@ -4,7 +4,6 @@ DiffusionLab is a small Python library (with a handy command-line interface) for
 
 All the commands in this README are given for **macOS**, but they'll likely work on Linux too with minor changes. I've tried to keep the code modular and tested, so you should be able to run it on any machine, not just the one I built it on. Reproducibility was a big focus as well.
 
-
 ## Project goal
 
 The whole point of this project is to show something pretty fundamental: if you zoom out, all those tiny random movements at the microscopic level actually add up to smooth, predictable diffusion at the macroscopic scale.
@@ -97,7 +96,6 @@ The intercept $b$ is not forced to zero. A small non-zero intercept is expected 
 - **CLI**: run everything from the command line if you prefer.
 - **Testing**: include a suite of `pytest` tests to keep things stable.
 
-
 ## Requirements
 
 - macOS
@@ -174,10 +172,10 @@ deactivate
 Run the included free-diffusion example:
 
 ```bash
-diffusionlab --config configs/free_walk.json --out results/free_walk
+diffusionlab run --config configs/free_walk.json --out results/free_walk
 ```
 
-> The current command-line interface uses `--config` and `--out` directly. It does not use a `run` subcommand.
+> The current command-line interface uses `--config` and `--out` directly.
 
 The command performs the complete workflow:
 
@@ -205,16 +203,16 @@ The example `configs/free_walk.json` contains:
 }
 ```
 
-| Parameter | Description | Valid value |
-| --- | --- | --- |
-| `n_particles` | Number of independent particles | Positive integer |
-| `n_steps` | Number of random-walk steps | Positive integer |
-| `step_length` | Lattice step length $a$ | Positive number |
-| `time_step` | Time interval $\Delta t$ per step | Positive number |
-| `seed` | Random seed used for reproducibility | Integer |
-| `boundary` | Boundary condition | `"none"` or `"reflecting"` |
-| `box_size` | Side length of the reflecting square | Positive for a reflecting boundary; otherwise `null` |
-| `save_every` | Save one state every specified number of steps | Positive integer |
+| Parameter       | Description                                    | Valid value                                           |
+| --------------- | ---------------------------------------------- | ----------------------------------------------------- |
+| `n_particles` | Number of independent particles                | Positive integer                                      |
+| `n_steps`     | Number of random-walk steps                    | Positive integer                                      |
+| `step_length` | Lattice step length$a$                       | Positive number                                       |
+| `time_step`   | Time interval$\Delta t$ per step             | Positive number                                       |
+| `seed`        | Random seed used for reproducibility           | Integer                                               |
+| `boundary`    | Boundary condition                             | `"none"` or `"reflecting"`                        |
+| `box_size`    | Side length of the reflecting square           | Positive for a reflecting boundary; otherwise`null` |
+| `save_every`  | Save one state every specified number of steps | Positive integer                                      |
 
 Invalid user-facing parameters are rejected with informative exceptions.
 
@@ -231,13 +229,13 @@ results/free_walk/
 └── msd_fit.png
 ```
 
-| File | Contents |
-| --- | --- |
-| `trajectories.csv` | Position of every particle at every saved step |
-| `msd.csv` | Simulation step, physical time, and MSD |
-| `summary.json` | Fit parameters, estimated and theoretical $D$, relative error, and configuration metadata |
-| `trajectories.png` | Sample particle trajectories |
-| `msd_fit.png` | Simulated MSD and its fitted line |
+| File                 | Contents                                                                                   |
+| -------------------- | ------------------------------------------------------------------------------------------ |
+| `trajectories.csv` | Position of every particle at every saved step                                             |
+| `msd.csv`          | Simulation step, physical time, and MSD                                                    |
+| `summary.json`     | Fit parameters, estimated and theoretical$D$, relative error, and configuration metadata |
+| `trajectories.png` | Sample particle trajectories                                                               |
+| `msd_fit.png`      | Simulated MSD and its fitted line                                                          |
 
 Generated result files are ignored by Git because they can be reproduced from the configuration and source code. Two small example figures are stored in `docs/images/` for display in this README.
 
@@ -245,14 +243,14 @@ Generated result files are ignored by Git because they can be reproduced from th
 
 The displayed example was generated with:
 
-| Setting | Value |
-| --- | ---: |
-| Number of particles | 1000 |
-| Number of steps | 500 |
-| Step length $a$ | 1.0 |
-| Time step $\Delta t$ | 1.0 |
-| Random seed | 42 |
-| Boundary condition | None |
+| Setting               | Value |
+| --------------------- | ----: |
+| Number of particles   |  1000 |
+| Number of steps       |   500 |
+| Step length$a$      |   1.0 |
+| Time step$\Delta t$ |   1.0 |
+| Random seed           |    42 |
+| Boundary condition    |  None |
 
 For these parameters,
 
@@ -266,13 +264,13 @@ D_{\mathrm{theory}}
 
 The generated `summary.json` contains:
 
-| Quantity | Result |
-| --- | ---: |
-| Fitted slope $m$ | 1.0113316342 |
-| Fitted intercept $b$ | -0.4918985773 |
-| Estimated $D=m/4$ | 0.2528329086 |
-| Theoretical $D$ | 0.2500000000 |
-| Relative error | 1.1332% |
+| Quantity              |        Result |
+| --------------------- | ------------: |
+| Fitted slope$m$     |  1.0113316342 |
+| Fitted intercept$b$ | -0.4918985773 |
+| Estimated$D=m/4$    |  0.2528329086 |
+| Theoretical$D$      |  0.2500000000 |
+| Relative error        |       1.1332% |
 
 The numerical estimate is close to the theoretical value. The difference is expected because the MSD is calculated from a finite ensemble of random trajectories.
 
@@ -303,11 +301,11 @@ diffusionlab --config configs/step_length_20.json --out results/step_length_20
 
 For fixed $\Delta t=1$, theory predicts:
 
-| Step length $a$ | Theoretical $D=a^2/(4\Delta t)$ |
-| ---: | ---: |
-| 0.5 | 0.0625 |
-| 1.0 | 0.25 |
-| 2.0 | 1.0 |
+| Step length$a$ | Theoretical$D=a^2/(4\Delta t)$ |
+| ---------------: | -------------------------------: |
+|              0.5 |                           0.0625 |
+|              1.0 |                             0.25 |
+|              2.0 |                              1.0 |
 
 Thus,
 
